@@ -15,7 +15,7 @@ impl BigCalc {
         //pad the strings with 0's
     }
     fn pad_to_same_length(&self, left: &'static str, right: &'static str ) -> (String, String) {
-        return (String::from("test"), String::from("other"));
+        return (String::from("123"), String::from("456"));
     }
 
 }
@@ -37,6 +37,12 @@ mod tests {
 
     #[test]
     fn pad_to_same_length_test(){
+
+        let sut = BigCalc::new();
+        let output = sut.pad_to_same_length("111", "222");
+        println!("{:#?}", output);
+        let output_format = format!("Hello {:0>width$}!", "x", width = 5);
+        println!("{:#?}", output_format);
 
     }
 }
