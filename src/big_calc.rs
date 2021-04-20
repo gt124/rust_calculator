@@ -4,7 +4,7 @@ struct BigCalc {
 }
 
 impl BigCalc {
-    fn new(&self) -> BigCalc{
+    fn new() -> BigCalc{
         return BigCalc{};
     }
     fn testy(&self){
@@ -23,6 +23,7 @@ mod tests {
 
 
         let sut = BigCalc::new();
+        //let sut = BigCalc{};
         sut.testy();
         //assert_eq!(1, value_in_cents(penny));
     }
