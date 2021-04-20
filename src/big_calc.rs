@@ -14,7 +14,7 @@ impl BigCalc {
         return left.parse::<i32>().unwrap() + right.parse::<i32>().unwrap() ;
         //pad the strings with 0's
     }
-    fn pad_to_same_length(&self, left: &'static str, right: &'static str ) -> (String, String) {
+    fn pad_to_same_length(&self, _left: &'static str, _right: &'static str ) -> (String, String) {
         return (String::from("123"), String::from("456"));
     }
 
@@ -43,6 +43,16 @@ mod tests {
         println!("{:#?}", output);
         let output_format = format!("Hello {:0>width$}!", "x", width = 5);
         println!("{:#?}", output_format);
+
+        let play = vec!("456".chars());
+        println!("{:#?}", play);
+        let s = "768";
+        for i in play{
+
+            println!("fires");
+
+            println!("{:#?}", i);
+        }
 
     }
 }
