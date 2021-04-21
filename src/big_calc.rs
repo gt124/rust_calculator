@@ -1,3 +1,5 @@
+use std::str;
+
 
 struct BigCalc {
 
@@ -44,9 +46,10 @@ mod tests {
         let output_format = format!("Hello {:0>width$}!", "x", width = 5);
         println!("{:#?}", output_format);
 
-        let play = vec!("456".chars());
-        println!("{:#?}", play);
-        let s = "768";
+        let mut play: Vec<char> = "876".chars().collect();
+        println!("ok this  is {:#?}", play[0]);
+        println!("{:#?}", play.reverse());
+        println!("ok this  is reversed {:#?}", play[0]);
         for i in play{
 
             println!("fires");
