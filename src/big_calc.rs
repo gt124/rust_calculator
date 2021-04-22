@@ -9,15 +9,36 @@ impl BigCalc {
     fn new() -> BigCalc{
         return BigCalc{};
     }
+
     fn testy(&self){
         println!("it worked");
     }
+
     fn add(&self, left: &'static str, right: &'static str) -> i32{
-        return left.parse::<i32>().unwrap() + right.parse::<i32>().unwrap() ;
+
         //pad the strings with 0's
+        let padded_numbers = self.pad_to_same_length(left, right);
+        println!("{:#?}", padded_numbers);
+        //loop through and call a function on each char
+
+        return left.parse::<i32>().unwrap() + right.parse::<i32>().unwrap() ;
     }
+
     fn pad_to_same_length(&self, _left: &'static str, _right: &'static str ) -> (String, String) {
-        return (String::from("123"), String::from("456"));
+        let mut max_length = _left.len();
+        if _left.len() < _right.len()  {
+            max_length = _right.len();
+        }
+
+        let left_formatted = format!("{:0>width$}", _left, width = max_length);
+        let right_formatted = format!("{:0>width$}", _right, width = max_length);
+        return (String::from(left_formatted), String::from(right_formatted));
+    }
+
+    fn add_two(&self, _left: char, _right: char) -> (bool, u32) {
+        let output = _left.to_digit(10).unwrap() + _right.to_digit(10).unwrap();
+        let digit = output % 10;
+        return (output > 9, digit)
     }
 
 }
@@ -32,30 +53,51 @@ mod tests {
         let sut = BigCalc::new();
         //let sut = BigCalc{};
         sut.testy();
-        let output = sut.add("22", "33");
+        let output = sut.add("2245", "33");
         println!("{}", output);
         //assert_eq!(1, value_in_cents(penny));
     }
-
     #[test]
-    fn pad_to_same_length_test(){
-
-        let sut = BigCalc::new();
-        let output = sut.pad_to_same_length("111", "222");
-        println!("{:#?}", output);
-        let output_format = format!("Hello {:0>width$}!", "x", width = 5);
-        println!("{:#?}", output_format);
-
-        let mut play: Vec<char> = "876".chars().collect();
-        println!("ok this  is {:#?}", play[0]);
+    fn add_something_test() {
+        let mut play: Vec<char> = "875".chars().collect();
+        println!("ok this  is {:#?}", play[1]);
         println!("{:#?}", play.reverse());
-        println!("ok this  is reversed {:#?}", play[0]);
-        for i in play{
-
+        println!("ok this  is reversed {:#?}", play[1]);
+        for i in play {
             println!("fires");
 
             println!("{:#?}", i);
         }
+    }
+    #[test]
+    fn add_two_test() {
+        let sut = BigCalc::new();
+        let mut output = sut.add_two('3', '6');
+        println!("ok this  is {:#?}", output);
+        output = sut.add_two('7', '6');
+        println!("ok this  is {:#?}", output);
+
+        // let mut play: Vec<char> = "875".chars().collect();
+        // println!("ok this  is {:#?}", play[1]);
+        // println!("{:#?}", play.reverse());
+        // println!("ok this  is reversed {:#?}", play[1]);
+        // for i in play {
+        //     println!("fires");
+        //
+        //     println!("{:#?}", i);
+        // }
+    }
+    #[test]
+    fn pad_to_same_length_test(){
+
+        let sut = BigCalc::new();
+        let mut output = sut.pad_to_same_length("11", "2223");
+        println!("{:#?}", output);
+        output = sut.pad_to_same_length("345111", "2223");
+        println!("{:#?}", output);
+        // let output_format = format!("Hello {:0>width$}!", "x", width = 5);
+        // println!("{:#?}", output_format);
+
 
     }
 }
