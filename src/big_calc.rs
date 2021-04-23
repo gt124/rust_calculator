@@ -1,5 +1,4 @@
 use std::str;
-use std::net::UdpSocket;
 
 pub trait Execute<T> {
     fn execute(&self) -> T;
@@ -8,12 +7,17 @@ pub trait Execute<T> {
 struct BigCalc {
 
 }
-impl<T> Execute<T> for BigCalc{
-    fn execute(&self) -> T {
-        println!("execute firing");
-        return BigCalc::new() ;
+impl Execute<u8> for BigCalc {
+    fn execute(&self) -> u8 {
+        16
     }
 }
+// impl Execute<BigCalc> for BigCalc {
+//     fn execute(&self) -> BigCalc {
+//         return BigCalc{};
+//     }
+// }
+
 impl BigCalc {
     fn new() -> BigCalc{
         return BigCalc{};
@@ -65,8 +69,10 @@ mod tests {
         let sut = BigCalc::new();
         //let sut = BigCalc{};
         sut.testy();
-        let output = sut.execute("2245", "33");
+        let output = sut.execute();
         println!("{}", output);
+        let otheroutput = sut.add("3456", "4");
+        println!("{}", otheroutput);
         //assert_eq!(1, value_in_cents(penny));
     }
     #[test]
