@@ -36,13 +36,27 @@ impl CalcHugeStrings {
         let padded_left = padded_numbers.0;
         let padded_right = padded_numbers.1;
 
-        let collection:Vec<char> = padded_left.chars().collect();
+        let left_chars:Vec<char> = padded_left.chars().collect();
+        let right_chars:Vec<char> = padded_right.chars().collect();
+        let mut carry = false;
+        let mut output = String::new();
+
+        //loop through and call a function on each char
         while length > 0
         {
-            println!("{}", collection[length - 1]);
+            println!("{}", left_chars[length - 1]);
+            let carry_and_digit = self.add_two_and_carry(left_chars[length - 1], right_chars[length - 1], carry);
+            output = format!("{}{}",  carry_and_digit.1, output);
+            println!("Output = {}", output);
+            carry = carry_and_digit.0;
             length = length - 1;
         }
-        //loop through and call a function on each char
+        if carry {
+
+            output = format!("{}{}",  1, output);
+        }
+
+        println!("Output = {}", output);
 
         return left.parse::<i32>().unwrap() + right.parse::<i32>().unwrap() ;
     }
@@ -81,8 +95,8 @@ mod tests {
         sut.testy();
         let output = sut.execute();
         println!("{}", output);
-        let otheroutput = sut.add("3456", "4");
-        //println!("{}", otheroutput);
+        let otheroutput = sut.add("3456", "7874");
+        println!("{}", otheroutput);
         //assert_eq!(1, value_in_cents(penny));
     }
     #[test]
