@@ -4,10 +4,10 @@ pub trait Execute<T> {
     fn execute(&self) -> T;
 }
 
-struct BigCalc {
+struct CalcHugeStrings {
 
 }
-impl Execute<u8> for BigCalc {
+impl Execute<u8> for CalcHugeStrings {
     fn execute(&self) -> u8 {
         16
     }
@@ -18,9 +18,9 @@ impl Execute<u8> for BigCalc {
 //     }
 // }
 
-impl BigCalc {
-    fn new() -> BigCalc{
-        return BigCalc{};
+impl CalcHugeStrings {
+    fn new() -> CalcHugeStrings {
+        return CalcHugeStrings {};
     }
 
     fn testy(&self){
@@ -32,6 +32,16 @@ impl BigCalc {
         //pad the strings with 0's
         let padded_numbers = self.pad_to_same_length(left, right);
         println!("{:#?}", padded_numbers);
+        let mut length = padded_numbers.0.len();
+        let padded_left = padded_numbers.0;
+        let padded_right = padded_numbers.1;
+
+        let collection:Vec<char> = padded_left.chars().collect();
+        while length > 0
+        {
+            println!("{}", collection[length - 1]);
+            length = length - 1;
+        }
         //loop through and call a function on each char
 
         return left.parse::<i32>().unwrap() + right.parse::<i32>().unwrap() ;
@@ -66,13 +76,13 @@ mod tests {
 
     #[test]
     fn add_test() {
-        let sut = BigCalc::new();
+        let sut = CalcHugeStrings::new();
         //let sut = BigCalc{};
         sut.testy();
         let output = sut.execute();
         println!("{}", output);
         let otheroutput = sut.add("3456", "4");
-        println!("{}", otheroutput);
+        //println!("{}", otheroutput);
         //assert_eq!(1, value_in_cents(penny));
     }
     #[test]
@@ -89,7 +99,7 @@ mod tests {
     }
     #[test]
     fn add_two_and_carry_test() {
-        let sut = BigCalc::new();
+        let sut = CalcHugeStrings::new();
         let mut output = sut.add_two_and_carry('3', '6', false);
         println!("ok this  is {:#?}", output);
         output = sut.add_two_and_carry('7', '6', false);
@@ -112,7 +122,7 @@ mod tests {
     #[test]
     fn pad_to_same_length_test(){
 
-        let sut = BigCalc::new();
+        let sut = CalcHugeStrings::new();
         let mut output = sut.pad_to_same_length("11", "2223");
         println!("{:#?}", output);
         output = sut.pad_to_same_length("345111", "2223");
