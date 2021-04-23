@@ -1,10 +1,19 @@
 use std::str;
+use std::net::UdpSocket;
 
+pub trait Execute<T> {
+    fn execute(&self) -> T;
+}
 
 struct BigCalc {
 
 }
-
+impl<T> Execute<T> for BigCalc{
+    fn execute(&self) -> T {
+        println!("execute firing");
+        return BigCalc::new() ;
+    }
+}
 impl BigCalc {
     fn new() -> BigCalc{
         return BigCalc{};
@@ -35,8 +44,11 @@ impl BigCalc {
         return (String::from(left_formatted), String::from(right_formatted));
     }
 
-    fn add_two(&self, _left: char, _right: char) -> (bool, u32) {
-        let output = _left.to_digit(10).unwrap() + _right.to_digit(10).unwrap();
+    fn add_two_and_carry(&self, _left: char, _right: char, _carry: bool) -> (bool, u32) {
+        let mut output = _left.to_digit(10).unwrap() + _right.to_digit(10).unwrap();
+        if _carry{
+            output = output + 1;
+        }
         let digit = output % 10;
         return (output > 9, digit)
     }
@@ -53,7 +65,7 @@ mod tests {
         let sut = BigCalc::new();
         //let sut = BigCalc{};
         sut.testy();
-        let output = sut.add("2245", "33");
+        let output = sut.execute("2245", "33");
         println!("{}", output);
         //assert_eq!(1, value_in_cents(penny));
     }
@@ -70,11 +82,15 @@ mod tests {
         }
     }
     #[test]
-    fn add_two_test() {
+    fn add_two_and_carry_test() {
         let sut = BigCalc::new();
-        let mut output = sut.add_two('3', '6');
+        let mut output = sut.add_two_and_carry('3', '6', false);
         println!("ok this  is {:#?}", output);
-        output = sut.add_two('7', '6');
+        output = sut.add_two_and_carry('7', '6', false);
+        println!("ok this  is {:#?}", output);
+        output = sut.add_two_and_carry('3', '4', true);
+        println!("ok this  is {:#?}", output);
+        output = sut.add_two_and_carry('7', '6', true);
         println!("ok this  is {:#?}", output);
 
         // let mut play: Vec<char> = "875".chars().collect();
